@@ -3,8 +3,10 @@ import "fmt"
 func main(){
 	var accountBalance float64= 1000
 
-   for i:=0; i < 2; i++ { 	
 	fmt.Println("Welcome to Go Bank!!")
+
+   for { 	
+
 	fmt.Println("What do you want to do?")
 	fmt.Println("1. Check Balance")
 	fmt.Println("2. Deposit Money")
@@ -23,7 +25,8 @@ func main(){
 
 		if depositAmount < 0 {
 			fmt.Println("Invalid DepositAmount! Must be greater than 0!")
-			return // stops the execution of function
+			// return // stops the execution of function
+			continue //skip the current loop and iterate next
 		}
 
 		accountBalance += depositAmount
@@ -35,22 +38,25 @@ func main(){
 
 		if withdrawAmount < 0 {
 			fmt.Println("Invalid DepositAmount! Must be greater than 0!")
-			return // stops the execution of function
+			// return // stops the execution of function
+			continue 
 		}
 
 		if withdrawAmount > accountBalance {
 			fmt.Println("Invalid Amount! You can't withdraw more tha what you have!")
-			return
+			// return
+			continue 
 		}
 
 		accountBalance -= withdrawAmount
 		fmt.Println("Balance Updated! New Amount: ",accountBalance)
 	}else {
 		fmt.Println("GoodBye!!!")
+		// return
+		break
 	}
 
-	fmt.Println("Your Choice:", choice)
-
 	}
+	fmt.Println("Thanks for choosing our bank!")
 	
 }
