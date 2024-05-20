@@ -3,6 +3,7 @@ import "fmt"
 func main(){
 	var accountBalance float64= 1000
 
+   for i:=0; i < 2; i++ { 	
 	fmt.Println("Welcome to Go Bank!!")
 	fmt.Println("What do you want to do?")
 	fmt.Println("1. Check Balance")
@@ -50,4 +51,6 @@ func main(){
 
 	fmt.Println("Your Choice:", choice)
 
+	}
+	
 }
