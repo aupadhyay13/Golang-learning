@@ -5,13 +5,15 @@ import ("fmt"
 "errors"
 "strconv"
 )
-func writeFloatToFile(fileName string, value float64) {
+
+// functions will only be available to different package if they are defined by upper case letter
+func WriteFloatToFile(fileName string, value float64) {  
 	valueText := fmt.Sprint(value)   // generate a string 
 	// []byte(balanceText)  converting string into bytes
 	os.WriteFile(fileName,[]byte(valueText),0644) //0644 is a file permission to read and write file from owner
 }
 
-func getFloatFromFile(fileName string) (float64,error){
+func GetFloatFromFile(fileName string) (float64,error){
 	// _ means we don't wanna work with it right now
 	data, err := os.ReadFile(fileName)
 	// nil is a special value in go which stands for the absence
