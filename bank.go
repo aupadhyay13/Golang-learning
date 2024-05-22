@@ -33,6 +33,9 @@ func main(){
 		fmt.Println("ERROR")
 		fmt.Println(err)
 		fmt.Println("-------------")
+		panic("Can't continue Sorry!") // built in Panic function help in stop the execution of program
+		// return // if don't want to continue execution if there is error
+
 	}
 	fmt.Println("Welcome to Go Bank!!")
 
