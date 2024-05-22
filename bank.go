@@ -1,15 +1,26 @@
 package main
 import "fmt"
 import "os"
+import "strconv"
 
+
+const accountBalanceFile = "balance.txt"
 func writeBalanceToFile(balance float64) {
 	balanceText := fmt.Sprint(balance)   // generate a string 
 	// []byte(balanceText)  converting string into bytes
-	os.WriteFile("balance.txt",[]byte(balanceText),0644) //0644 is a file permission to read and write file from owner
+	os.WriteFile(accountBalanceFile,[]byte(balanceText),0644) //0644 is a file permission to read and write file from owner
+}
+
+func getBalanceFromFile() float64{
+	// _ means we don't wanna work with it right now
+	data, _ := os.ReadFile(accountBalanceFile)
+	balanceText := string(data)
+	balance , _ := strconv.ParseFloat(balanceText, 64) // convert string to float
+	return balance
 }
 
 func main(){
-	var accountBalance float64= 1000
+	var accountBalance float64= getBalanceFromFile()
 
 	fmt.Println("Welcome to Go Bank!!")
 
