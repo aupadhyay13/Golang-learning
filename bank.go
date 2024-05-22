@@ -6,29 +6,29 @@ import "errors"
 
 
 const accountBalanceFile = "balance.txt"
-func writeBalanceToFile(balance float64) {
-	balanceText := fmt.Sprint(balance)   // generate a string 
+func writeFloatToFile(fileName string, value float64) {
+	valueText := fmt.Sprint(value)   // generate a string 
 	// []byte(balanceText)  converting string into bytes
-	os.WriteFile(accountBalanceFile,[]byte(balanceText),0644) //0644 is a file permission to read and write file from owner
+	os.WriteFile(fileName,[]byte(valueText),0644) //0644 is a file permission to read and write file from owner
 }
 
-func getBalanceFromFile() (float64,error){
+func getFloatFromFile(fileName string) (float64,error){
 	// _ means we don't wanna work with it right now
-	data, err := os.ReadFile(accountBalanceFile)
+	data, err := os.ReadFile(fileName)
 	// nil is a special value in go which stands for the absence
 	if err != nil {	// Handling error
-		return 1000, errors.New("failed To Find Balance File")
+		return 1000, errors.New("failed To Find File")
 	}
-	balanceText := string(data)
-	balance , err := strconv.ParseFloat(balanceText, 64) // convert string to float
+	valueText := string(data)
+	value , err := strconv.ParseFloat(valueText, 64) // convert string to float
 	if err != nil {			// if it can't convert string to float
 		return 1000, errors.New("failed To Parse stored balance value")
 	}
-	return balance, nil
+	return value, nil
 }
 
 func main(){
-	var accountBalance, err= getBalanceFromFile()
+	var accountBalance, err= getFloatFromFile(accountBalanceFile)
 	if err != nil {
 		fmt.Println("ERROR")
 		fmt.Println(err)
@@ -62,7 +62,7 @@ func main(){
 
 			accountBalance += depositAmount
 			fmt.Println("Balance Updated! New Amount: ", accountBalance)
-			writeBalanceToFile(accountBalance)
+			writeFloatToFile(accountBalanceFile,accountBalance)
 		case 3: 
 			fmt.Println("Your Amount: ")
 			var withdrawAmount float64
