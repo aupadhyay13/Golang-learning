@@ -2,6 +2,7 @@ package main
 import "fmt"
 import "os"
 import "strconv"
+import "errors"
 
 
 const accountBalanceFile = "balance.txt"
@@ -11,17 +12,28 @@ func writeBalanceToFile(balance float64) {
 	os.WriteFile(accountBalanceFile,[]byte(balanceText),0644) //0644 is a file permission to read and write file from owner
 }
 
-func getBalanceFromFile() float64{
+func getBalanceFromFile() (float64,error){
 	// _ means we don't wanna work with it right now
-	data, _ := os.ReadFile(accountBalanceFile)
+	data, err := os.ReadFile(accountBalanceFile)
+	// nil is a special value in go which stands for the absence
+	if err != nil {	// Handling error
+		return 1000, errors.New("failed To Find Balance File")
+	}
 	balanceText := string(data)
-	balance , _ := strconv.ParseFloat(balanceText, 64) // convert string to float
-	return balance
+	balance , err := strconv.ParseFloat(balanceText, 64) // convert string to float
+	if err != nil {			// if it can't convert string to float
+		return 1000, errors.New("failed To Parse stored balance value")
+	}
+	return balance, nil
 }
 
 func main(){
-	var accountBalance float64= getBalanceFromFile()
-
+	var accountBalance, err= getBalanceFromFile()
+	if err != nil {
+		fmt.Println("ERROR")
+		fmt.Println(err)
+		fmt.Println("-------------")
+	}
 	fmt.Println("Welcome to Go Bank!!")
 
    for { 	
