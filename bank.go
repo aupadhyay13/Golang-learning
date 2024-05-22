@@ -1,12 +1,12 @@
 package main
 import "fmt"
-
+import "example.com/bank/fileops"
 
 const accountBalanceFile = "balance.txt"
 
 
 func main(){
-	var accountBalance, err= getFloatFromFile(accountBalanceFile)
+	var accountBalance, err= fileops.getFloatFromFile(accountBalanceFile)
 	if err != nil {
 		fmt.Println("ERROR")
 		fmt.Println(err)
@@ -40,7 +40,7 @@ func main(){
 
 			accountBalance += depositAmount
 			fmt.Println("Balance Updated! New Amount: ", accountBalance)
-			writeFloatToFile(accountBalanceFile,accountBalance)
+			fileops.writeFloatToFile(accountBalanceFile,accountBalance)
 		case 3: 
 			fmt.Println("Your Amount: ")
 			var withdrawAmount float64
