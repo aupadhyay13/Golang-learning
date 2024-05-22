@@ -1,5 +1,13 @@
 package main
 import "fmt"
+import "os"
+
+func writeBalanceToFile(balance float64) {
+	balanceText := fmt.Sprint(balance)   // generate a string 
+	// []byte(balanceText)  converting string into bytes
+	os.WriteFile("balance.txt",[]byte(balanceText),0644) //0644 is a file permission to read and write file from owner
+}
+
 func main(){
 	var accountBalance float64= 1000
 
@@ -32,6 +40,7 @@ func main(){
 
 			accountBalance += depositAmount
 			fmt.Println("Balance Updated! New Amount: ", accountBalance)
+			writeBalanceToFile(accountBalance)
 		case 3: 
 			fmt.Println("Your Amount: ")
 			var withdrawAmount float64
