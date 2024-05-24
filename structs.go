@@ -12,6 +12,11 @@ type user struct {		 // if first character is uppercase then it is globally avai
 	birthDate string
 	createdAt time.Time  // nested struct
 } 
+func (u user) outputUserDetails(){   // here u user is called as receiver and it attaches methos to struct
+	fmt.Println(u.firstName, u.lastName, u.birthDate)
+	// fmt.Println((*u).firstName, (*u).lastName, (*u).birthDate)// technical way of accessing structs value by pointer
+
+}
 func main() {
 	userFirstName := getUserData("Please enter your first name: ")
 	userLastName := getUserData("Please enter your last name: ")
@@ -30,14 +35,10 @@ func main() {
 		birthDate: userBirthdate,
 		createdAt: time.Now(),
 	}
-	outputUserDetails(&appUser)
+	appUser.outputUserDetails() // no need to pass argumemnts because it will be passed automatically by go
 }
 
-func outputUserDetails(u *user){
-	fmt.Println(u.firstName, u.lastName, u.birthDate)
-	fmt.Println((*u).firstName, (*u).lastName, (*u).birthDate)// technical way of accessing structs value by pointer
 
-}
 
 func getUserData(promptText string) string {
 	fmt.Print(promptText)
