@@ -30,11 +30,13 @@ func main() {
 		birthDate: userBirthdate,
 		createdAt: time.Now(),
 	}
-	outputUserDetails(appUser)
+	outputUserDetails(&appUser)
 }
 
-func outputUserDetails(u user){
+func outputUserDetails(u *user){
 	fmt.Println(u.firstName, u.lastName, u.birthDate)
+	fmt.Println((*u).firstName, (*u).lastName, (*u).birthDate)// technical way of accessing structs value by pointer
+
 }
 
 func getUserData(promptText string) string {
