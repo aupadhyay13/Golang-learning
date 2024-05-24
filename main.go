@@ -1,7 +1,6 @@
 package main
 import "fmt"
-import "errors"
-import "example.go/struct-project/note"
+import "example.com/struct-project/note"
 
 func main(){
 	title, content := getNoteData()
@@ -11,6 +10,8 @@ func main(){
 		fmt.Println(err)
 		return
 	}
+
+	userNote.DisplayNote()
 }
 
 
