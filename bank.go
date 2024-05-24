@@ -1,77 +1,34 @@
 package main
-import "fmt"
-import "example.com/bank/fileops"
-import "github.com/Pallinder/go-randomdata"
 
-const accountBalanceFile = "balance.txt"
+import (
+	"fmt"
+	"time"
+)
 
 
-func main(){
-	var accountBalance, err= fileops.GetFloatFromFile(accountBalanceFile)
-	if err != nil {
-		fmt.Println("ERROR")
-		fmt.Println(err)
-		fmt.Println("-------------")
-		panic("Can't continue Sorry!") // built in Panic function help in stop the execution of program
-		// return // if don't want to continue execution if there is error
+type user struct {		 // if first character is uppercase then it is globally available
+	firstName string
+	lastName string
+	birthDate string
+	createdAt time.Time
+} 
+func main() {
+	firstName := getUserData("Please enter your first name: ")
+	lastName := getUserData("Please enter your last name: ")
+	birthdate := getUserData("Please enter your birthdate (MM/DD/YYYY): ")
 
-	}
-	fmt.Println("Welcome to Go Bank!!")
-	fmt.Println("Reach Us 24/7",randomdata.PhoneNumber()) // use of third party library 
+	// ... do something awesome with that gathered data!
 
-   for { 	
-
-	presentOptions()
-
-	var choice int
-	fmt.Scan(&choice)
-
-	switch choice {
-		case 1:
-			fmt.Println("Your Balance is: ", accountBalance)
-		case 2:
-			fmt.Println("Your Deposit: ")
-			var depositAmount float64
-			fmt.Scan(&depositAmount)
-
-			if depositAmount < 0 {
-				fmt.Println("Invalid DepositAmount! Must be greater than 0!")
-				// return // stops the execution of function
-				continue //skip the current loop and iterate next
-			}
-
-			accountBalance += depositAmount
-			fmt.Println("Balance Updated! New Amount: ", accountBalance)
-			fileops.WriteFloatToFile(accountBalanceFile,accountBalance)
-		case 3: 
-			fmt.Println("Your Amount: ")
-			var withdrawAmount float64
-			fmt.Scan(&withdrawAmount)
-
-			if withdrawAmount < 0 {
-				fmt.Println("Invalid DepositAmount! Must be greater than 0!")
-				// return // stops the execution of function
-				continue 
-			}
-
-			if withdrawAmount > accountBalance {
-				fmt.Println("Invalid Amount! You can't withdraw more tha what you have!")
-				// return
-				continue 
-			}
-
-			accountBalance -= withdrawAmount
-			fmt.Println("Balance Updated! New Amount: ",accountBalance)
-		default:
-			fmt.Println("GoodBye!!!")
-			return
-			//break
-
-	}
-
-}
-	fmt.Println("Thanks for choosing our bank!")
-   
+	outputUserDetails(firstName, lastName, birthdate)
 }
 
+func outputUserDetails(firstName,lastName,birthdate string){
+	fmt.Println(firstName, lastName, birthdate)
+}
 
+func getUserData(promptText string) string {
+	fmt.Print(promptText)
+	var value string
+	fmt.Scan(&value)
+	return value
+}
