@@ -7,9 +7,9 @@ import "strings"
 import "encoding/json"
 
 type Note struct {
-	Title string
-	Content string
-	CreatedAt time.Time
+	Title string `json:"title"`
+	Content string `json:"content"`
+	CreatedAt time.Time `json:"created_at"`
 }
 func (note Note) DisplayNote() {
 	fmt.Printf("Your Note Titled %v has the following content: \n\n%v\n\n ",note.Title, note.Content)
