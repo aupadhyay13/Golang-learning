@@ -24,6 +24,9 @@ func main() {
 		fmt.Println(err)
 		return
 	}
+
+	admin := user.NewAdmin("test@gmail.com","Test@123")
+	admin.OutputUserDetails()
 	appUser.OutputUserDetails() // no need to pass argumemnts because it will be passed automatically by go
 	appUser.ClearUserName()
 	appUser.OutputUserDetails()

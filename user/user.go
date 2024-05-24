@@ -10,6 +10,25 @@ type User struct {		 // if first character is uppercase then it is globally avai
 	birthDate string
 	createdAt time.Time  // nested struct
 } 
+
+type Admin struct {
+	email string
+	password string
+	User
+}
+
+func NewAdmin(email, password string) Admin {
+	return Admin{
+		email: email,
+		password: password,
+		User: User{
+			firstName: "Aditya",
+			lastName: "Upadhyay",
+			birthDate: "---",
+			createdAt: time.Now(),
+		},
+	}
+}
 func (u User) OutputUserDetails(){   // here u user is called as receiver and it attaches methos to struct
 	fmt.Println(u.firstName, u.lastName, u.birthDate)
 	// fmt.Println((*u).firstName, (*u).lastName, (*u).birthDate)// technical way of accessing structs value by pointer
