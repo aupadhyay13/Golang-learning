@@ -1,9 +1,12 @@
 package main
 import "fmt"
 import "errors"
+import "example.go/struct-project/note"
 
 func main(){
-	title, content, err := getNoteData()
+	title, content := getNoteData()
+
+	userNote,err := note.New(title,content)
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -12,26 +15,15 @@ func main(){
 
 
 
-func getNoteData() (string,string,error){
-	title,err := getUserInput("Note Title:")
-	if err != nil{
-		return "","",err
-	}
-	content,err := getUserInput("Note Content:")
-	if err != nil{
-		return "","",err
-	}
-	return title,content,nil
-
+func getNoteData() (string,string){
+	title := getUserInput("Note Title:")
+	content := getUserInput("Note Content:")
+	return title,content
 }
 
-func getUserInput(prompt string) (string,error){
+func getUserInput(prompt string) (string){
 	fmt.Print(prompt)
 	var value string
 	fmt.Scanln(&value)
-
-	if value == "" {
-		return "",errors.New("invalid Input")
-	}
-	return value,nil
+	return value
 }
