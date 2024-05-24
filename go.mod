@@ -1,4 +1,4 @@
-module example.com/bank
+module example.com/structs
 
 go 1.16
 
