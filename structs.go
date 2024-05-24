@@ -17,6 +17,12 @@ func (u user) outputUserDetails(){   // here u user is called as receiver and it
 	// fmt.Println((*u).firstName, (*u).lastName, (*u).birthDate)// technical way of accessing structs value by pointer
 
 }
+
+func (u *user) clearUserName() {
+	u.firstName = ""
+	u.lastName = ""
+}
+
 func main() {
 	userFirstName := getUserData("Please enter your first name: ")
 	userLastName := getUserData("Please enter your last name: ")
@@ -36,6 +42,9 @@ func main() {
 		createdAt: time.Now(),
 	}
 	appUser.outputUserDetails() // no need to pass argumemnts because it will be passed automatically by go
+	appUser.clearUserName()
+	appUser.outputUserDetails()
+
 }
 
 
