@@ -21,6 +21,8 @@ func main() {
 
 	var appUser user
 
+	// appUser = user{} // this will create with null value
+
 
 	appUser = user {
 		firstName: userFirstName,
@@ -28,11 +30,11 @@ func main() {
 		birthDate: userBirthdate,
 		createdAt: time.Now(),
 	}
-	outputUserDetails(firstName, lastName, birthdate)
+	outputUserDetails(appUser)
 }
 
-func outputUserDetails(firstName,lastName,birthdate string){
-	fmt.Println(firstName, lastName, birthdate)
+func outputUserDetails(u user){
+	fmt.Println(u.firstName, u.lastName, u.birthDate)
 }
 
 func getUserData(promptText string) string {
