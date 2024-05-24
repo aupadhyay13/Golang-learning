@@ -23,6 +23,14 @@ func (u *user) clearUserName() {
 	u.lastName = ""
 }
 
+func newUser(firstName, lastName, birthDate string) *user{	// constructor kind of function
+	return &user{
+		firstName: firstName,
+		lastName: lastName,
+		birthDate: birthDate,
+		createdAt: time.Now(),
+	}
+}
 func main() {
 	userFirstName := getUserData("Please enter your first name: ")
 	userLastName := getUserData("Please enter your last name: ")
@@ -30,17 +38,12 @@ func main() {
 
 	// ... do something awesome with that gathered data!
 
-	var appUser user
+	var appUser *user
 
 	// appUser = user{} // this will create with null value
 
 
-	appUser = user {
-		firstName: userFirstName,
-		lastName: userLastName,
-		birthDate: userBirthdate,
-		createdAt: time.Now(),
-	}
+	appUser = newUser(userFirstName,userLastName,userBirthdate)
 	appUser.outputUserDetails() // no need to pass argumemnts because it will be passed automatically by go
 	appUser.clearUserName()
 	appUser.outputUserDetails()
