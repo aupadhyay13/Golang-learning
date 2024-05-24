@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"time"
+	"errors"
 )
 
 
@@ -23,13 +24,16 @@ func (u *user) clearUserName() {
 	u.lastName = ""
 }
 
-func newUser(firstName, lastName, birthDate string) *user{	// constructor kind of function
+func newUser(firstName, lastName, birthDate string) (*user,error){	// constructor kind of function
+	if firstName == "" || lastName == "" || birthDate == "" {
+		return nil,errors.New("FirstName , LastName and birthDate required")
+	}
 	return &user{
 		firstName: firstName,
 		lastName: lastName,
 		birthDate: birthDate,
 		createdAt: time.Now(),
-	}
+	}, nil
 }
 func main() {
 	userFirstName := getUserData("Please enter your first name: ")
@@ -43,7 +47,11 @@ func main() {
 	// appUser = user{} // this will create with null value
 
 
-	appUser = newUser(userFirstName,userLastName,userBirthdate)
+	appUser,err := newUser(userFirstName,userLastName,userBirthdate)
+	if err != nil{
+		fmt.Println(err)
+		return
+	}
 	appUser.outputUserDetails() // no need to pass argumemnts because it will be passed automatically by go
 	appUser.clearUserName()
 	appUser.outputUserDetails()
@@ -55,6 +63,6 @@ func main() {
 func getUserData(promptText string) string {
 	fmt.Print(promptText)
 	var value string
-	fmt.Scan(&value)
+	fmt.Scanln(&value)
 	return value
 }
