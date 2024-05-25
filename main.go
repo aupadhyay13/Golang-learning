@@ -7,9 +7,7 @@ import "os"
 import "strings"
 
 type saver interface {
-	Save() error{
-		
-	}
+	Save() error
 }
 
 func main(){
@@ -28,24 +26,29 @@ func main(){
 	}
 
 	todo.DisplayToDo()
-	err = todo.Save()
-	if err!= nil {
-		fmt.Println("Saving the Todo failed!")
-		return 
+	err = saveData(todo)
+	if err != nil {
+		return
 	}
-
-	fmt.Println("Saving the Todo succeeded!")
 	userNote.DisplayNote()
-	err = userNote.Save()
-	if err!= nil {
-		fmt.Println("Saving the note failed!")
-		return 
+	err = saveData(userNote)
+	if err != nil{
+		return
 	}
-
-	fmt.Println("Saving the note succeeded!")
+	
 }
 
 
+func saveData(data saver) error{
+ 	err := data.Save()
+	 if err!= nil {
+		fmt.Println("Saving the note failed!")
+		return err
+	}
+
+	fmt.Println("Saving the note succeeded!")
+	return nil
+}
 
 func getNoteData() (string,string){
 	title := getUserInput("Note Title:")
