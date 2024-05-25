@@ -6,6 +6,12 @@ import "bufio"
 import "os"
 import "strings"
 
+type saver interface {
+	Save() error{
+		
+	}
+}
+
 func main(){
 	title, content := getNoteData()
 	todoText := getUserInput("To Do Text:")
