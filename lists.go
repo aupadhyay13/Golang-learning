@@ -10,6 +10,13 @@ func main(){
 	fmt.Println(productNames)
 
 	fmt.Println(prices[2])
-	featuredPrices := prices[1:3]
+	// featuredPrices := prices[:3]  // from begineeing
+	featuredPrices := prices[1:]
+	featuredPrices[0] = 199.99 // though we changed in featuredPrice it will change in price array as well
+	highlitedPrices := featuredPrices[:1]
+	fmt.Println(highlitedPrices)
+
 	fmt.Println(featuredPrices)
+	fmt.Println(prices)
+	fmt.Println(len(highlitedPrices), cap(highlitedPrices))
 }
