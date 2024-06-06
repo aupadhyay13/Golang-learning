@@ -3,6 +3,7 @@ import "os"
 import "bufio"
 import "errors"
 import "encoding/json"
+import "fmt"
 
 type FileManager struct{
 	InputFilePath string
@@ -10,8 +11,10 @@ type FileManager struct{
 }
 
 func(fm FileManager) ReadLines() ([]string,error){
+	fmt.Println(fm.InputFilePath)
 	file, err := os.Open(fm.InputFilePath)
 	if err != nil{
+		fmt.Println("errrrrr",err)
 		return nil,errors.New("failed to Open file")
 	}
 	scanner := bufio.NewScanner(file)
