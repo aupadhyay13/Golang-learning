@@ -1,9 +1,8 @@
 package prices
 import "fmt"
-import "os"
-import "bufio"
 
 import "example.com/struct-project/conversion"
+import "example.com/struct-project/filemanager"
 
 type TaxIncludedPriceJob struct{
 	TaxRate float64
@@ -12,37 +11,20 @@ type TaxIncludedPriceJob struct{
 }
 
 func(job *TaxIncludedPriceJob) LoadData(){
-	file, err := os.Open("prices.txt")
+	lines, err := filemanager.ReadLines("prices.txt")
+
 	if err != nil{
-		fmt.Println("An error Occurred!")
 		fmt.Println(err)
-		return
+		return 
 	}
-	scanner := bufio.NewScanner(file)
 	
-	var lines []string
-
-	for scanner.Scan() {
-		lines = append(lines, scanner.Text())
-	}
-
-	err = scanner.Err()
-	if err != nil{
-		fmt.Println("An error Occurred!")
-		fmt.Println(err)
-		file.Close()
-		return
-	}
-
 	prices, err := conversion.StringsToFloats(lines)
 
 	if err != nil {
 		fmt.Println(err)
-		file.Close()
 		return
 	}
 	job.InputPrices = prices
-	file.Close()
 }
 
 
