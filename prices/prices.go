@@ -2,7 +2,8 @@ package prices
 import "fmt"
 import "os"
 import "bufio"
-import "strconv"
+
+import "example.com/struct-project/conversion"
 
 type TaxIncludedPriceJob struct{
 	TaxRate float64
@@ -33,20 +34,15 @@ func(job *TaxIncludedPriceJob) LoadData(){
 		return
 	}
 
-	prices := make([]float64, len(lines))
+	prices, err := conversion.StringsToFloats(lines)
 
-	for lineIndex,lineVal := range lines {
-		floatPrice, err := strconv.ParseFloat(lineVal, 64)
-		
-		if err != nil{
-			fmt.Println("Converting Price to float failed!")
-			fmt.Println(err)
-			file.Close()
-			return
-		}
-		prices[lineIndex] = floatPrice
+	if err != nil {
+		fmt.Println(err)
+		file.Close()
+		return
 	}
 	job.InputPrices = prices
+	file.Close()
 }
 
 
