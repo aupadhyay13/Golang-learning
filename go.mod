@@ -1,3 +1,3 @@
-module example.com/goroutines
+module example.com/rest-api
 
 go 1.16
