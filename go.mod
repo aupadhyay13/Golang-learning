@@ -1,3 +1,3 @@
-module example.com/struct-project
+module example.com/goroutines
 
 go 1.16

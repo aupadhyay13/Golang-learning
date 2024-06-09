@@ -1,15 +1,38 @@
 package main
-import "example.com/struct-project/prices"
-import "example.com/struct-project/filemanager"
-import "fmt"
 
-func main(){
-	var taxRates []float64 = []float64{0,0.07,0.1,0.15}
+import (
+	"fmt"
+	"time"
+)
+
+func greet(phrase string, doneChan chan bool) {
+	fmt.Println("Hello!", phrase)
+	doneChan <- true
+}
+
+func slowGreet(phrase string, doneChan chan bool) {
+	time.Sleep(3 * time.Second) // simulate a slow, long-taking task
+	fmt.Println("Hello!", phrase)
+	doneChan <- true
+	close(doneChan)
+}
+
+func main() {
+	done := make(chan bool)
+	
+	go greet("Nice to meet you!", done)
 
 
-	for _,taxRate := range taxRates {
-		fm := filemanager.New("prices.txt",fmt.Sprintf("result_%.0f.json",taxRate*100))
-		priceJob := prices.NewTaxIncludedPriceJob(fm, taxRate)
-		priceJob.Process()
+	go greet("How are you?", done)
+
+
+	go slowGreet("How ... are ... you ...?", done)
+
+
+	go greet("I hope you're liking the course!", done)
+
+
+	for range done{
+		// fmt.Println(doneChan)
 	}
 }
