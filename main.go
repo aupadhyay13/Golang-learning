@@ -2,6 +2,7 @@ package main
 
 
 import (
+	"fmt"
 	"net/http"
 	"github.com/gin-gonic/gin"
 	"example.com/rest-api/models"
@@ -10,7 +11,7 @@ func main(){
 	server := gin.Default()
 
 	server.GET("/events", getEvents)	//GET POST PUT PATCH DELETE
-	server.POST("/events")
+	server.POST("/events",createEvent)
 
 	server.Run(":8081")	//localhost during development
 }
@@ -24,6 +25,7 @@ func getEvents(context *gin.Context){
 func createEvent(context *gin.Context){
 	var event models.Event
 	err := context.ShouldBindJSON(&event)
+	
 	if err != nil{
 		context.JSON(http.StatusBadRequest, gin.H{"message" : "Could not Parse Data!"})
 		return
