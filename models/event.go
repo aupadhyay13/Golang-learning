@@ -1,18 +1,22 @@
 package models
-import "time"
 
-type Event struct{
-	ID int64 
-	Name string `binding:"required"`
-	Description string	`binding:"required"`
-	Location string	`binding:"required"`
-	DateTime time.Time	`binding:"required"`
-	UserID int
+import (
+	"fmt"
+	"time"
+
+	"example.com/rest-api/db"
+)
+
+type Event struct {
+	ID          int64
+	Name        string    `binding:"required"`
+	Description string    `binding:"required"`
+	Location    string    `binding:"required"`
+	DateTime    time.Time `binding:"required"`
+	UserID      int
 }
 
-var events = []Event{}
-
-func (e Event) Save() error{
+func (e Event) Save() error {
 	// later: add it to the database
 	query := `
 	INSERT INTO events(name,description,location,dateTime, user_id)
@@ -20,12 +24,12 @@ func (e Event) Save() error{
 	`
 	stmt, err := db.DB.Prepare(query)
 
-	if err != nil{
+	if err != nil {
 		return err
 	}
 	defer stmt.Close()
-	result, err := stmt.Exec(e.Name,e.Description, e.Location, e.DateTime, e.UserID)
-	
+	result, err := stmt.Exec(e.Name, e.Description, e.Location, e.DateTime, e.UserID)
+
 	if err != nil {
 		return err
 	}
@@ -35,7 +39,23 @@ func (e Event) Save() error{
 	return err
 }
 
-func GetAllEvents() []Event {
+func GetAllEvents() ([]Event, error) {
+	query := `SELECT * FROM events`
+	rows, err := db.DB.Query(query)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var events []Event
+	for rows.Next() {
+		var event Event
+		err := rows.Scan(&event.ID, &event.Name, &event.Description, &event.Location, &event.DateTime, &event.UserID)
+		if err != nil {
+			return nil, err
+		}
+		events = append(events, event)
+	}
 
-	return events
+	fmt.Println("AAI gyu aatooooo", events)
+	return events, nil
 }
