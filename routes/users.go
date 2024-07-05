@@ -1,9 +1,11 @@
 package routes
 
 import (
+	"fmt"
 	"net/http"
 
 	"example.com/rest-api/models"
+	"example.com/rest-api/utils"
 	"github.com/gin-gonic/gin"
 )
 
@@ -27,6 +29,7 @@ func signup(context *gin.Context) {
 }
 
 func login(context *gin.Context) {
+	fmt.Println("aayu aa to route ma->>>>>>>>>>>>>>>>>>>>>>>>>>")
 	var user models.User
 	err := context.ShouldBindJSON(&user)
 	if err != nil {
@@ -39,6 +42,12 @@ func login(context *gin.Context) {
 		context.JSON(http.StatusUnauthorized, gin.H{"message": "Could not authenticate user."})
 		return
 	}
+	fmt.Println("aayu ahi to---->")
+	token, err := utils.GenerateToken(user.Email, user.ID)
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"message": "Could not authenticate user."})
+		return
+	}
 
-	context.JSON(http.StatusOK, gin.H{"message": "Login Successfull!"})
+	context.JSON(http.StatusOK, gin.H{"message": "Login Successfull!", "token": token})
 }
