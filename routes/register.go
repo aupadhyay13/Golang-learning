@@ -32,5 +32,17 @@ func registerForEvent(context *gin.Context) {
 }
 
 func cancelRegister(context *gin.Context) {
+	userId := context.GetInt64("userId")
+	eventId, err := strconv.ParseInt(context.Param("id"), 10, 64)
 
+	var event models.Event
+	event.ID = eventId
+
+	event.CancelRegistration(userId)
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"message": "Could not cancel registration of  user."})
+		return
+	}
+
+	context.JSON(http.StatusCreated, gin.H{"message": "Cancelled!"})
 }
